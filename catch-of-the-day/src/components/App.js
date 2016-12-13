@@ -2,17 +2,24 @@ import React from 'react';
 import Header from './Header';
 import Order from './Order';
 import Inventory from './Inventory';
+import Fish from './Fish';
+import SampleFishes from '../sample-fishes';
 
 class App extends React.Component {
     constructor(){
         super();
         this.addFish = this.addFish.bind(this);
-
+        this.loadSamples = this.loadSamples.bind(this);
         //set iniitial state
         this.state = {
             fishes: {},
             orders: {}
         };
+    }
+
+    loadSamples(){
+        const fishes = SampleFishes;
+        this.setState({fishes});
     }
 
     addFish(fish){
@@ -28,9 +35,17 @@ class App extends React.Component {
     render(){
         return (
             <div className="catch-of-the-day">
-                <Header tagline="Fresh Seafood Market" />
+                <div class="menu">
+                    <Header tagline="Fresh Seafood Market" />
+                    <ul class="list-of-fishes">
+                    {
+                        Object.keys(this.state.fishes)
+                              .map(key => <Fish key={key} details={this.state.fishes[key]}/>)
+                    }
+                    </ul>
+                </div>
                 <Order />
-                <Inventory addFish={this.addFish}/>
+                <Inventory addFish={this.addFish} loadSamples={this.loadSamples}/>
             </div>
         );
     }

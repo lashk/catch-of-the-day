@@ -69,15 +69,9 @@ class App extends React.Component {
         const order = {...this.state.order};
         const fish = this.state.fishes[key];
         const isAvailable = fish.status === 'available';
-        if (!isAvailable){
-            order[key] = 0;
-        } else {
-            order[key] = order[key]-1;
-        }
-        if (order[key] === 0){
-            order[key] = null;
-            delete order[key];
-        }
+
+        order[key]=null;
+        delete order[key];
         this.setState({order});
     }
 
@@ -125,6 +119,10 @@ class App extends React.Component {
             </div>
         );
     }
+}
+
+App.propTypes = {
+    params: React.PropTypes.object.isRequired
 }
 
 export default App;
